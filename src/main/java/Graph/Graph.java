@@ -57,6 +57,19 @@ public class Graph {
         return degrees;
     }
 
+    public boolean isRealizableBoolean()
+    {
+        List<Integer> deglist = isRealizable();
+        for(int deg:deglist)
+        {
+            if(deg>0 || deg<0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean isConnected()
     {
         List<Node> nodes = new ArrayList<Node>();
@@ -79,6 +92,7 @@ public class Graph {
 
     public List<Integer> isRealizable() {
         if (checkCorrectness()) {
+            createDegreeList();
             degrees = topDownReduction(degrees);
             return degrees;
         }
@@ -122,6 +136,44 @@ public class Graph {
             }
         }
         return possible;
+    }
+
+    public boolean hasEulerTour()
+    {
+        if(isRealizableBoolean() && isConnected())
+        {
+            createDegreeList();
+            boolean isTrue = true;
+            for(int deg:degrees)
+            {
+                if(!isTrue)
+                {
+                    return false;
+                }
+                isTrue = (deg>0 && deg%2==0) ? true:false;
+            }
+            return isTrue;
+        }
+        return false;
+    }
+
+    public boolean hasHamiltonPath()
+    {
+        if(isRealizableBoolean() && isConnected())
+        {
+            createDegreeList();
+            boolean isTrue = nodes.size()<3 ? false:true;
+            for(int deg:degrees)
+            {
+                if(!isTrue)
+                {
+                    return false;
+                }
+                isTrue = (deg>=(nodes.size()/2)) ? true:false;
+            }
+            return isTrue;
+        }
+        return false;
     }
 
     public List<Node> getNodes(){return nodes;}
