@@ -13,13 +13,13 @@ public class Node {
         if(neighbors.contains(node)) return null;
         Edge edg = new Edge(this,node);
         neighbors.add(node);
-        graph.addEdge(edg);
+        graph.addDigraphEdge(edg);
         return edg;
     }
 
     public Edge getEdgeTo(Node node)
     {
-        List<Edge> lst = graph.getEdges().stream().filter(x->x.getFrom()==this && x.getTo()==node).collect(Collectors.toList());
+        List<Edge> lst = graph.getDigraphEdges().stream().filter(x->x.getFrom()==this && x.getTo()==node).collect(Collectors.toList());
         if(lst.isEmpty()) return null;
         return lst.get(0);
     }
