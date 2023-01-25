@@ -13,80 +13,66 @@ public class Graph {
     private List<Integer> degrees;
 
 
-    public Graph(List<Node> nodes, List<Edge> digraphEdges, List<Edge> simpleEdges)
-    {
-        this.nodes=nodes;
-        this.digraphEdges=digraphEdges;
-        this.simpleEdges=simpleEdges;
+    public Graph(List<Node> nodes, List<Edge> digraphEdges, List<Edge> simpleEdges) {
+        this.nodes = nodes;
+        this.digraphEdges = digraphEdges;
+        this.simpleEdges = simpleEdges;
     }
 
-    public Node addNewNode()
-    {
+
+    public Node addNewNode() {
         Node node = new Node();
         nodes.add(node);
         return node;
     }
 
-    public void addNewNode(Node node)
-    {
-        if(!nodes.contains(node)) nodes.add(node);
+    public void addNewNode(Node node) {
+        if (!nodes.contains(node)) nodes.add(node);
     }
 
-    public void addDigraphEdge(Edge edg)
-    {
-        if(digraphEdges.contains(edg)) return;
+    public void addDigraphEdge(Edge edg) {
+        if (digraphEdges.contains(edg)) return;
         digraphEdges.add(edg);
     }
 
-    public void addSimpleEdge(Edge edg)
-    {
-        if(simpleEdges.contains(edg)) return;
+    public void addSimpleEdge(Edge edg) {
+        if (simpleEdges.contains(edg)) return;
         simpleEdges.add(edg);
-        Edge oppDir = new Edge(edg.getTo(),edg.getFrom());
+        Edge oppDir = new Edge(edg.getTo(), edg.getFrom());
         simpleEdges.add(oppDir);
     }
 
-    public List<Integer> createDegreeList()
-    {
-        degrees= new ArrayList<Integer>();
-        for(Node node : nodes)
-        {
+    public List<Integer> createDegreeList() {
+        degrees = new ArrayList<Integer>();
+        for (Node node : nodes) {
             int degree = node.getDegree();
             degrees.add(degree);
         }
         return degrees;
     }
 
-    public boolean isRealizableBoolean()
-    {
+    public boolean isRealizableBoolean() {
         List<Integer> deglist = isRealizable();
-        for(int deg:deglist)
-        {
-            if(deg>0 || deg<0)
-            {
+        for (int deg : deglist) {
+            if (deg > 0 || deg < 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean isConnected()
-    {
+    public boolean isConnected() {
         List<Node> nodes = new ArrayList<Node>();
-        isConnectedRec(nodes,this.nodes.get(0));
-        return nodes.size()==this.nodes.size();
+        isConnectedRec(nodes, this.nodes.get(0));
+        return nodes.size() == this.nodes.size();
     }
 
-    public void isConnectedRec(List<Node> nodeList,Node current)
-    {
-        if(!nodeList.contains(current))
-        {
+    public void isConnectedRec(List<Node> nodeList, Node current) {
+        if (!nodeList.contains(current)) {
             nodeList.add(current);
-        }
-        else return;
-        for(Node node: current.getNeighbors())
-        {
-            isConnectedRec(nodeList,node);
+        } else return;
+        for (Node node : current.getNeighbors()) {
+            isConnectedRec(nodeList, node);
         }
     }
 
@@ -138,48 +124,76 @@ public class Graph {
         return possible;
     }
 
-    public boolean hasEulerTour()
-    {
-        if(isRealizableBoolean() && isConnected())
-        {
+    public boolean hasEulerTour() {
+        if (isRealizableBoolean() && isConnected()) {
             createDegreeList();
             boolean isTrue = true;
-            for(int deg:degrees)
-            {
-                if(!isTrue)
-                {
+            for (int deg : degrees) {
+                if (!isTrue) {
                     return false;
                 }
-                isTrue = (deg>0 && deg%2==0) ? true:false;
+                isTrue = (deg > 0 && deg % 2 == 0) ? true : false;
             }
             return isTrue;
         }
         return false;
     }
 
-    public boolean hasHamiltonPath()
-    {
-        if(isRealizableBoolean() && isConnected())
-        {
+    public boolean hasHamiltonPath() {
+        if (isRealizableBoolean() && isConnected()) {
             createDegreeList();
-            boolean isTrue = nodes.size()<3 ? false:true;
-            for(int deg:degrees)
-            {
-                if(!isTrue)
-                {
+            boolean isTrue = nodes.size() < 3 ? false : true;
+            for (int deg : degrees) {
+                if (!isTrue) {
                     return false;
                 }
-                isTrue = (deg>=(nodes.size()/2)) ? true:false;
+                isTrue = (deg >= (nodes.size() / 2)) ? true : false;
             }
             return isTrue;
         }
         return false;
     }
 
-    public List<Node> getNodes(){return nodes;}
-    public List<Integer> getDegrees(){return degrees;}
-    public List<Edge> getDigraphEdges(){return digraphEdges;}
-    public List<Edge> getSimpleEdges(){return simpleEdges;}
+    public int[][] getAdjencyMatrix() {
+        int[][] adjenzMatrix = new int[nodes.size()][nodes.size()];
+        for (int i = 0; i < nodes.size(); i++) {
+            for (int j = 0; j < nodes.size(); j++) {
+                if (nodes.get(i).hasNeighbour(nodes.get(j))) {
+                    adjenzMatrix[i][j] = 1;
+                }
+            }
+        }
+        return adjenzMatrix;
+    }
 
+    public void createUndirectedGraph() {
+        for (Edge e : digraphEdges) {
+            addSimpleEdge(e);
+        }
+    }
+
+    public boolean isCircleFree() {
+        return digraphEdges.size() + 1 == nodes.size();
+    }
+
+    public boolean isATree(){
+        return isConnected() && isCircleFree();
+    }
+
+    public List<Node> getNodes() {
+        return nodes;
+    }
+
+    public List<Integer> getDegrees() {
+        return degrees;
+    }
+
+    public List<Edge> getDigraphEdges() {
+        return digraphEdges;
+    }
+
+    public List<Edge> getSimpleEdges() {
+        return simpleEdges;
+    }
 
 }

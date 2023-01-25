@@ -36,5 +36,7 @@ public class Main {
         System.out.println(graph.hasEulerTour());
         System.out.println(graph.hasHamiltonPath());
         System.out.println(graph.isConnected());
+        System.out.println(Arrays.deepToString(graph.getAdjencyMatrix()));
+        System.out.println(graph.isCircleFree());
     }
 }

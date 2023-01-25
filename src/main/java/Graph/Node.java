@@ -26,6 +26,12 @@ public class Node {
 
     public List<Node> getNeighbors(){return neighbors;}
 
+    public boolean hasNeighbour(Node node)
+    {
+        if(neighbors.contains(node)) return true;
+        return false;
+    }
+
     public int getDegree(){return neighbors.size();}
 
 }
