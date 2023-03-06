@@ -26,14 +26,12 @@
 <br />
   <p align="center">
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/HacisKenan/Graph-Datastructure-and-Algorithms"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Project Folder</a>
+    <a href="https://github.com/HacisKenan/Graph-Datastructure-and-Algorithms/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/HacisKenan/Graph-Datastructure-and-Algorithms/issues">Request Feature</a>
   </p>
 </div>
 
@@ -70,21 +68,22 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Following repository is my first hobby project and is about creating a own datastructure to store a graph. Also the repository contains algorithms to test
-and output specific graph charateristics. For example: connectivity, circles, eulerian path, sufficient condition for an hamilton path, havel hakimi to check
-if graph is graphic and many more that will follow in the future. 
+Following repository is my first hobby project and is about creating a own datastructure to store a graph and use/apply simple algorithms on it. For example: connectivity, circles, eulerian circle, sufficient condition for an hamilton circle, havel-hakimi algorithm to check
+realizability and many more that will follow in the future. 
 
 Current project status
-* Created classes for a graph, nodes and edges to store a graph
-* wrote algorithims to check graph charasteristics
+* Created class to store graph, its nodes and edges
+* wrote algorithims to check graph charasteristics such as for connectivity, eulerian circle, havel hakimi, check for circles, condition for hamilton circle
 
-Future features: 
-* GUI for visualization and user interaction -> user can comfortably import his graph structure in set/tuple notation
-* traversing algorithm
+Future features
+* GUI, using Java Spring, for visualization and user interaction -> user can comfortably import his graph structure in set/tuple notation
+* traversing algorithm to find specific node
 * iterator
 * .exe file
+* planarity testing
+* gale-shapley-algorithm simulation supported with simple visual representation
 
-For any questions to my project or persona you can write me a mail under following mail: kenanhacisalihoglu@gmx.at
+For any questions to my project or persona you can write me an email under following address: kenanhacisalihoglu@gmx.at
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -97,61 +96,27 @@ For any questions to my project or persona you can write me a mail under followi
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Clone repository in preferred IDE and use Main.java in main package to implement your graph and test algorithms.
+Clone repository in preferred IDE and use the file Main.java in main package to implement your graph and test provided algorithms.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+There are no prerequisites needed.
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+- [x] Add graph/node/edge class to store a provided graph
+- [x] Add Algorithm for Connectivity, circle check, realizability
+- [x] Add Algorithm to check for eulerian circle and hamilton circle
+- [ ] Add Algorithm to check for planarity
+- [ ] Add Gale-Shapley-Algorithms to simulate Matching
+- [ ] Add detailed documentation for all algorithms provided in the files
+- [ ] Add GUI with Java Spring
+  - [ ] for GS Algorithm
+  - [ ] for storing Graph with Set/Tuple input
+- [ ] Add .exe file
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -165,21 +130,6 @@ Contributions are what make the open source community such an amazing place to l
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -187,30 +137,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Hacisalihoglu Kenan - kenanhacisalihoglu@gmx.at
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+Project Link: [https://github.com/HacisKenan/Graph-Datastructure-and-Algorithms](https://github.com/HacisKenan/Graph-Datastructure-and-Algorithms)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
