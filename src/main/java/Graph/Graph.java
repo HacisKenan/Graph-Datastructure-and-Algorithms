@@ -1,52 +1,82 @@
 package Graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class Graph {
+public  class Graph {
+
+    public class Node{
+        private HashSet<Node> neighbors;
+        public Node() {
+            neighbors=new HashSet<>();
+        }
+
+        public void removeNeighbour(Node node)
+        {
+            neighbors.remove(node);
+        }
+
+        public boolean hasNeighbour(Node node)
+        {
+            return neighbors.contains(node);
+        }
+
+        public int getDegree(){return neighbors.size();}
+        public HashSet<Node> getNeighbors(){return neighbors;}
+    }
+
+    public class Edge {
+        private Node from;
+        private Node to;
+
+        public Edge(Node from, Node to)
+        {
+            this.from=from;
+            this.to=to;
+        }
+
+        public Node getFrom()
+        {
+            return from;
+        }
+        public Node getTo()
+        {
+            return to;
+        }
+    }
+
     private List<Node> nodes;
-    private List<Edge> digraphEdges;
-    private List<Edge> simpleEdges;
+    private HashSet<Edge> edges;
     private List<Integer> degrees;
+    private boolean degCalculated;
 
+    private final List<Integer> K33_DEG = List.of(3, 3, 3, 3, 3, 3);
+    private final List<Integer> K5_DEG = List.of(4, 4, 4, 4, 4);
 
-    public Graph(List<Node> nodes, List<Edge> digraphEdges, List<Edge> simpleEdges) {
+    public Graph(List<Node> nodes, HashSet<Edge> edges) {
         this.nodes = nodes;
-        this.digraphEdges = digraphEdges;
-        this.simpleEdges = simpleEdges;
+        this.edges = edges;
+        degCalculated=false;
     }
 
-
-    public Node addNewNode() {
-        Node node = new Node();
-        nodes.add(node);
-        return node;
+    public void addNode() {
+        nodes.add(new Node());
     }
 
-    public void addNewNode(Node node) {
-        if (!nodes.contains(node)) nodes.add(node);
+    public void removeNode(Node node) {nodes.remove(node);}
+
+
+    public void addEdge(Node A, Node B) {
+        edges.add(new Edge(A,B));
     }
 
-    public void addDigraphEdge(Edge edg) {
-        if (digraphEdges.contains(edg)) return;
-        digraphEdges.add(edg);
-    }
-
-    public void addSimpleEdge(Edge edg) {
-        if (simpleEdges.contains(edg)) return;
-        simpleEdges.add(edg);
-        Edge oppDir = new Edge(edg.getTo(), edg.getFrom());
-        simpleEdges.add(oppDir);
-    }
-
-    public List<Integer> createDegreeList() {
-        degrees = new ArrayList<Integer>();
-        for (Node node : nodes) {
-            int degree = node.getDegree();
-            degrees.add(degree);
+    public List<Integer> createDegreeSequence() {
+        if(!degCalculated){
+            degrees = new ArrayList<Integer>();
+            for (Node node : nodes) {
+                int degree = node.getDegree();
+                degrees.add(degree);
+            }
         }
         return degrees;
     }
@@ -59,6 +89,15 @@ public class Graph {
             }
         }
         return true;
+    }
+
+    public List<Integer> isRealizable() {
+        if (checkCorrectness()) {
+            createDegreeSequence();
+            degrees = topDownReduction(degrees);
+            return degrees;
+        }
+        return new ArrayList<Integer>();
     }
 
     public boolean isConnected() {
@@ -76,14 +115,6 @@ public class Graph {
         }
     }
 
-    public List<Integer> isRealizable() {
-        if (checkCorrectness()) {
-            createDegreeList();
-            degrees = topDownReduction(degrees);
-            return degrees;
-        }
-        return new ArrayList<Integer>();
-    }
 
     public boolean checkCorrectness() {
         if (degrees == null) return false;
@@ -124,9 +155,9 @@ public class Graph {
         return possible;
     }
 
-    public boolean hasEulerTour() {
+    public boolean hasEulerCirlce() {
         if (isRealizableBoolean() && isConnected()) {
-            createDegreeList();
+            createDegreeSequence();
             boolean isTrue = true;
             for (int deg : degrees) {
                 if (!isTrue) {
@@ -139,9 +170,9 @@ public class Graph {
         return false;
     }
 
-    public boolean hasHamiltonPath() {
+    public boolean hasHamiltonCircle() {
         if (isRealizableBoolean() && isConnected()) {
-            createDegreeList();
+            createDegreeSequence();
             boolean isTrue = nodes.size() < 3 ? false : true;
             for (int deg : degrees) {
                 if (!isTrue) {
@@ -156,6 +187,7 @@ public class Graph {
 
     public int[][] getAdjencyMatrix() {
         int[][] adjenzMatrix = new int[nodes.size()][nodes.size()];
+        for(Node node: nodes)
         for (int i = 0; i < nodes.size(); i++) {
             for (int j = 0; j < nodes.size(); j++) {
                 if (nodes.get(i).hasNeighbour(nodes.get(j))) {
@@ -166,17 +198,88 @@ public class Graph {
         return adjenzMatrix;
     }
 
-    public void createUndirectedGraph() {
-        for (Edge e : digraphEdges) {
-            addSimpleEdge(e);
+    public Graph getUndirectedGraph()
+    {
+        HashSet<Edge> newEdges = new HashSet<Edge>(edges);
+
+        for(Edge edge : edges) {
+            newEdges.add(new Edge(edge.getTo(), edge.getFrom()));
         }
+        List<Node> newNodes = new ArrayList<Node>(nodes);
+        return new Graph(newNodes,newEdges);
+    }
+
+    public boolean isPlanar() {
+        Graph minor = this;
+        List<Integer> degree = minor.getDegrees();
+
+        for(Node node:minor.getNodes())
+        {
+            if(node.getNeighbors().isEmpty()) minor.removeNode(node);
+        }
+
+        if(!(couldHaveK5minor(degree) || couldHaveK33minor(degree))) return false;
+
+        // TODO
+
+        return true;
+    }
+
+    public void edgeContraction(Node node){
+        // TODO
+    }
+
+    public boolean compareDegToK33(List<Integer> degrees)
+    {
+        if(degrees.size()!=6) return false;
+        for(int i=0;i<6;i++)
+        {
+            if(!(degrees.get(i)==K33_DEG.get(i)))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean couldHaveK33minor(List<Integer> degrees)
+    {
+        if(degrees.size()<6) return false;
+        for(int i=0;i<degrees.size();i++)
+        {
+            if(degrees.get(i)<3) return false;
+        }
+        return true;
+    }
+
+    public boolean compareDegToK5(List<Integer> degrees)
+    {
+        if(degrees.size()!=5) return false;
+        for(int i=0;i<5;i++)
+        {
+            if(!(degrees.get(i)==K5_DEG.get(i)))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean couldHaveK5minor(List<Integer> degrees)
+    {
+        if(degrees.size()<5) return false;
+        for(int i=0;i<degrees.size();i++)
+        {
+            if(degrees.get(i)<4) return false;
+        }
+        return true;
     }
 
     public boolean isCircleFree() {
-        return digraphEdges.size() + 1 == nodes.size();
+        return edges.size() + 1 == nodes.size();
     }
 
-    public boolean isATree(){
+    public boolean isATree() {
         return isConnected() && isCircleFree();
     }
 
@@ -185,15 +288,12 @@ public class Graph {
     }
 
     public List<Integer> getDegrees() {
+        createDegreeSequence();
         return degrees;
     }
 
-    public List<Edge> getDigraphEdges() {
-        return digraphEdges;
-    }
-
-    public List<Edge> getSimpleEdges() {
-        return simpleEdges;
+    public HashSet<Edge> getEdges() {
+        return edges;
     }
 
 }
