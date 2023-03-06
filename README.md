@@ -76,7 +76,6 @@ Future features
 * planarity testing
 * gale-shapley-algorithm simulation supported with simple visual representation
 
-For any questions to my project or persona you can write me an email under following address: kenanhacisalihoglu@gmx.at
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
