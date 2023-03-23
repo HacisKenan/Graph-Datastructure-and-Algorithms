@@ -64,11 +64,11 @@ Following repository is my first hobby project and is about creating a own datas
 realizability and many more that will follow in the future. 
 
 Current project status
-* Created class to store graph, its nodes and edges
+* created class to store graph, its nodes and edges
 * wrote algorithims to check graph charasteristics such as for connectivity, eulerian circle, havel hakimi, check for circles, condition for hamilton circle
 
 Future features
-* GUI, using Java Spring, for visualization and user interaction -> user can comfortably import his graph structure in set/tuple notation
+* GUI, using java swing, for visualization and user interaction -> user can comfortably import his graph structure in set/tuple notation
 * traversing algorithm to find specific node
 * iterator
 * .exe file
